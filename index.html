@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOG</title>
+    <link rel="stylesheet" href="./a.CSS">
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <style>
+        .images{
+          display:flex;
+          align-items:flex-start;
+          transition:all 0.5s;
+        }
+        .image > img{
+          vertical-align:top;
+        }
+        .window{
+          width:300px;
+          overflow:hidden;        
+        }
+      </style>
+</head>
+<body>
+    <div class="window">
+        <div class="images" id=images>
+          <img src="./picture/bm.jpg" width=300 alt="图片1" height=300>
+          <img src="./picture/bx.jpg" width=300 alt="图片2" height=300>
+          <img src="./picture/jm.jpg" width=300 alt="图片3" height=300>
+          <img src="./picture/sm.jpg" width=300 alt="图片4" height=300>
+        </div>
+        </div>
+        <span id=buttons>
+          <span>博美</span>
+          <span>比熊</span>
+          <span>金毛</span>
+          <span>萨摩</span>
+        </span> 
+<script>
+var allButtons = $('#buttons > span')
+for (let i=0;i<allButtons.length;i++){
+  $(allButtons[i]).on('click', function(x){
+    var index = $(x.currentTarget).index()
+    var p = index * -300
+    $('#images').css({
+      transform: 'translate(' + p + 'px)'
+    })
+    n = index
+    allButtons.eq(n)
+    highlightbutton(allButtons.eq(n))
+})
+}
+ 
+var n = 0;
+var size = allButtons.length
+  playSlide(n%size)
+
+ var timeId = setTimer()
+ 
+ function setTimer(){
+  return setInterval(() => {
+  n += 1
+  playSlide(n%size)                          
+}, 1000)
+ }
+ function playSlide(index){
+   allButtons.eq(index).trigger('click')
+ }
+ function highlightbutton($button){
+   $button
+  .addClass('red')
+  .siblings('.red').removeClass('red') 
+ }
+ 
+ $('.window').on('mouseenter',function(){
+   window.clearInterval(timeId)
+ })
+ $('.window').on('mouseleave',function(){
+   timeId = setTimer()
+ })
+</script>
+</body>
+</html>
